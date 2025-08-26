@@ -1,0 +1,2 @@
+GRANT ALL PRIVILEGES ON joeap.* TO 'joeap_user'@'%' IDENTIFIED BY 'joeap123';
+FLUSH PRIVILEGES;

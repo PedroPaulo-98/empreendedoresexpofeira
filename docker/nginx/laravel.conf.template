@@ -1,0 +1,52 @@
+server {
+    listen 80;
+    access_log /dev/stdout;
+    error_log /dev/stderr;
+    server_name ${SERVER_NAME};
+
+    index index.php index.html;
+    root /var/www/app/public;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location ~ \.php$ {
+        fastcgi_pass php:9000;
+        fastcgi_index index.php;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+}
+
+server {
+    listen 443 ssl default_server;
+    access_log /dev/stdout;
+    error_log /dev/stderr;
+    server_name ${SERVER_NAME};
+
+    ssl_certificate /certs/${SSL_CERT};
+    ssl_certificate_key /certs/${SSL_CERT_KEY};
+
+    index index.php index.html;
+    root /var/www/app/public;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location ~ \.php$ {
+        fastcgi_pass php:9000;
+        fastcgi_index index.php;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+}
