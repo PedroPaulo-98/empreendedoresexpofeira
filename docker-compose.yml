@@ -111,7 +111,8 @@ services:
 
 volumes:
   certs_volume:
-    
+  mysql_data:
+
 networks:
   joeap_network:
     driver: bridge
